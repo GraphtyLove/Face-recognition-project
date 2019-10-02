@@ -9,7 +9,7 @@ import face_recognition
 import numpy as np
 import sys
 import cv2, queue, threading, time
-
+^
 
 # bufferless VideoCapture
 class VideoCapture:
