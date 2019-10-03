@@ -1,10 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import os
-from werkzeug.utils import secure_filename
 import psycopg2
-import time
-
+import cv2
+import numpy as np
 
 
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -33,7 +32,6 @@ def hello_world():
 def get_receive_data():
     if request.method == 'POST':
         json_data = request.get_json()
-        print(json_data)
 
         # Check if the user is already in the DB
         try:
@@ -50,15 +48,27 @@ def get_receive_data():
             result = cursor.fetchall()
             connection.commit()
 
-            print('result is: ', result)
 
             if result:
                print('user IN')
-               update_user_querry = f"UPDATE users SET departure_time = '{json_data['hour']}' WHERE name = '{json_data['name']}' AND date = '{json_data['date']}'"
+               image_path = f"{FILE_PATH}/assets/img/{json_data['date']}/{json_data['name']}/departure.jpg"
+                # Save image
+               os.makedirs(f"{FILE_PATH}/assets/img/{json_data['date']}/{json_data['name']}", exist_ok=True)
+               cv2.imwrite(image_path, np.array(json_data['picture_array']))
+
+               json_data['picture_path'] = image_path
+
+               update_user_querry = f"UPDATE users SET departure_time = '{json_data['hour']}', departure_picture = '{json_data['picture_path']}' WHERE name = '{json_data['name']}' AND date = '{json_data['date']}'"
                cursor.execute(update_user_querry)
+
             else:
                 print("user OUT")
-                insert_user_querry = f"INSERT INTO users (name, date, arrival_time) VALUES ('{json_data['name']}', '{json_data['date']}', '{json_data['hour']}')"
+                # Save image
+                image_path = f"{FILE_PATH}/assets/img/{json_data['date']}/{json_data['name']}/arrival.jpg"
+                os.makedirs(f"{FILE_PATH}/assets/img/{json_data['date']}/{json_data['name']}", exist_ok=True)
+                cv2.imwrite(image_path, np.array(json_data['picture_array']))
+                json_data['picture_path'] = image_path
+                insert_user_querry = f"INSERT INTO users (name, date, arrival_time, arrival_picture) VALUES ('{json_data['name']}', '{json_data['date']}', '{json_data['hour']}', '{json_data['picture_path']}')"
                 cursor.execute(insert_user_querry)
 
         except (Exception, psycopg2.DatabaseError) as error:
