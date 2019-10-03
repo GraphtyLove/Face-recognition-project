@@ -12,22 +12,35 @@ FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 app = Flask(__name__)
 CORS(app, support_credentials=True)
 
+
 # * ---------- DATABASE CONFIG --------- *
 # DATABASE_URL = os.environ['DATABASE_URL']
 # DATABASE_URL = "postgres://tuuiojqb:0ocbMkkVWOKIrfMenjjakNLT5JNQpWu8@manny.db.elephantsql.com:5432/tuuiojqb"
 
 
 
-
-
 # * --------------------  ROUTES ------------------- *
-@app.route('/hello_world', methods=['GET'])
-def hello_world():
-    print("hi")
-    print(request.get_json())
-    return "hello world"
+# add new employee
+@app.route('/add_employee', methods=['POST'])
+def add_employee():
+    imagefile = request.files.get('image', '')
+    name = request.files.get('name', '')
 
+    file_path = os.path.join('assets/img/users/', name)
+    imagefile.save(file_path)
 
+    return 'new employee succesfully added'
+
+# delete employee
+@app.route('/delete_employee', methods=['POST'])
+def delete_employee():
+    name = request.files.get('name', '')+'.jpg'
+    file_path = os.path.join('assets/img/users/', name)
+    os.remove(file_path)
+
+    return 'employee succesfully removed'
+
+# Get data from the face recognition
 @app.route('/receive_data', methods=['POST'])
 def get_receive_data():
     if request.method == 'POST':
