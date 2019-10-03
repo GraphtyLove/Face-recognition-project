@@ -55,7 +55,8 @@ def get_receive_data():
                                           database="tuuiojqb")
 
             cursor = connection.cursor()
-            is_user_is_there_today = f"SELECT * FROM users WHERE date = '{json_data['date']}' AND name = '{json_data['name']}'"
+            is_user_is_there_today =\
+                f"SELECT * FROM users WHERE date = '{json_data['date']}' AND name = '{json_data['name']}'"
 
             cursor.execute(is_user_is_there_today)
             result = cursor.fetchall()
@@ -97,10 +98,54 @@ def get_receive_data():
         return jsonify(json_data)
         # return 'lol'
 
+# add new employee
+@app.route('/add_employee', methods=['POST'])
+def add_employee():
+    imagefile = request.files.get('image', '')
+    json_data = request.get_json()
+
+    file_path = os.path.join('assets/img/users/', json_data['name'])
+    imagefile.save(file_path)
+
+    return 'new employee succesfully added'
+
+# delete employee
+@app.route('/delete_employee', methods=['POST'])
+def delete_employee():
+    json_data = request.get_json()
+    file_path = os.path.join('assets/img/users/', json_data['name']+'.jpg')
+    os.remove(file_path)
+
+    return 'employee succesfully removed'
 
 
+# this route is bugged
+@app.route('/attendance', methods=['POST'])
+def attendance():
+    json_data = request.get_json()
+    sql_query = "SELECT * FROM users WHERE "
+    if json_data['date']:
+        sql_query += f"date = '{json_data['date']}' "
+    if json_data['date'] and json_data['name']:
+        sql_query += 'AND'
+    if json_data['name']:
+        sql_query += f"name = '{json_data['name']}'"
 
+    connection = psycopg2.connect(user="tuuiojqb",
+                                  password="0ocbMkkVWOKIrfMenjjakNLT5JNQpWu8",
+                                  host="manny.db.elephantsql.com",
+                                  port="5432",
+                                  database="tuuiojqb")
 
+    cursor = connection.cursor()
+    # is_user_is_there_today = \
+    #     f"SELECT * FROM users WHERE date = '{json_data['date']}' AND name = '{json_data['name']}'"
+
+    cursor.execute(sql_query)
+    result = cursor.fetchall()
+    connection.commit()
+    print(result)
+    return {'result': i for i in result}
 # * ---------- Run Server ---------- *
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
