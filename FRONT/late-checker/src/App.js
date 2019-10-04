@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Fragment, useState} from 'react'
+import './App.css'
+import VideoFeed from './Components/VideoFeed/VideoFeed'
+import SearchBar from './Components/SearchBar/SearchBar'
+import LastArrivalList from './Components/LastArrivalList/LastArrivalList'
+import styled from 'styled-components'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+	const TitleOne = styled.h1`
+		margin-top : 0;
+		font-size: 45px;
+		line-height: 1;
+		font-weight: normal;
+		color: #013087;
+		text-align: center;
+`
 
-export default App;
+	const [searchBarAnswer, setSearchBarAnswer] = useState([]);
+
+	// const bertrand = (lol) => {
+	// 	setBertandState(lol)
+	// }
+
+	return(
+		<Fragment>
+			<TitleOne>Late Checker</TitleOne>
+			<VideoFeed />
+			<SearchBar searchBarAnswer={ setSearchBarAnswer } />
+			<LastArrivalList  />
+		</Fragment>
+	)}
+
+export default App

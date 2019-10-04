@@ -78,6 +78,10 @@ cassandra_face = face_recognition.load_image_file("assets/img/users/cassandra.jp
 cassandra_face_encoding = face_recognition.face_encodings(cassandra_face)[0]
 
 
+# * ---------- LUDO ---------- *
+# Select an image to teach to the machine how to recognize
+ludo_face = face_recognition.load_image_file("assets/img/users/ludo.jpg")
+ludo_face_encoding = face_recognition.face_encodings(ludo_face)[0]
 
 
 # Create arrays of known face encodings and their names
@@ -88,7 +92,8 @@ known_face_encodings = [
     jeremy_face_encoding,
     giuliano_face_encoding,
     mathieu_face_encoding,
-    cassandra_face_encoding
+    cassandra_face_encoding,
+    ludo_face_encoding
 ]
 known_face_names = [
     "Maxim Berge",
@@ -97,7 +102,8 @@ known_face_names = [
     "Jeremy",
     "Giuliano",
     "Mathieu",
-    "Cassandra"
+    "Cassandra",
+    "Ludo"
 ]
 
 

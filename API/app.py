@@ -4,6 +4,7 @@ import os
 import psycopg2
 import cv2
 import numpy as np
+import json
 
 
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -20,26 +21,6 @@ CORS(app, support_credentials=True)
 
 
 # * --------------------  ROUTES ------------------- *
-# add new employee
-@app.route('/add_employee', methods=['POST'])
-def add_employee():
-    imagefile = request.files.get('image', '')
-    name = request.files.get('name', '')
-
-    file_path = os.path.join('assets/img/users/', name)
-    imagefile.save(file_path)
-
-    return 'new employee succesfully added'
-
-# delete employee
-@app.route('/delete_employee', methods=['POST'])
-def delete_employee():
-    name = request.files.get('name', '')+'.jpg'
-    file_path = os.path.join('assets/img/users/', name)
-    os.remove(file_path)
-
-    return 'employee succesfully removed'
-
 # Get data from the face recognition
 @app.route('/receive_data', methods=['POST'])
 def get_receive_data():
@@ -96,6 +77,48 @@ def get_receive_data():
                 print("PostgreSQL connection is closed")
 
         return jsonify(json_data)
+
+
+@app.route('/get_employee/<string:name>', methods=['GET'])
+def get_employee(name):
+    answer_to_send = {}
+    # Check if the user is already in the DB
+    try:
+        connection = psycopg2.connect(user="tuuiojqb",
+                                      password="0ocbMkkVWOKIrfMenjjakNLT5JNQpWu8",
+                                      host="manny.db.elephantsql.com",
+                                      port="5432",
+                                      database="tuuiojqb")
+
+        cursor = connection.cursor()
+        user_information = f"SELECT * FROM users WHERE name = '{name}'"
+
+        cursor.execute(user_information)
+        result = cursor.fetchall()
+        connection.commit()
+
+        if result:
+            print('RESULT: ',result)
+            print(type(result[0]))
+            print(len(result[0]))
+            for k,v in enumerate(result):
+                answer_to_send[k] = {}
+                for ko,vo in enumerate(result[k]):
+                    answer_to_send[k][ko] = str(vo)
+            print('answer_to_send: ', answer_to_send)
+        else:
+            answer_to_send = {'error': 'User not found...'}
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("ERROR DB: ", error)
+    finally:
+        # closing database connection.
+        if (connection):
+            cursor.close()
+            connection.close()
+
+    return json.dumps(answer_to_send)
+
 
 # add new employee
 @app.route('/add_employee', methods=['POST'])
