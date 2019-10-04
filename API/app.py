@@ -78,8 +78,8 @@ def get_receive_data():
             else:
                 print("user OUT")
                 # Save image
-                image_path = f"{FILE_PATH}/assets/img/{json_data['date']}/{json_data['name']}/arrival.jpg"
-                os.makedirs(f"{FILE_PATH}/assets/img/{json_data['date']}/{json_data['name']}", exist_ok=True)
+                image_path = f"{FILE_PATH}/assets/img/history/{json_data['date']}/{json_data['name']}/arrival.jpg"
+                os.makedirs(f"{FILE_PATH}/assets/img/history/{json_data['date']}/{json_data['name']}", exist_ok=True)
                 cv2.imwrite(image_path, np.array(json_data['picture_array']))
                 json_data['picture_path'] = image_path
                 insert_user_querry = f"INSERT INTO users (name, date, arrival_time, arrival_picture) VALUES ('{json_data['name']}', '{json_data['date']}', '{json_data['hour']}', '{json_data['picture_path']}')"
@@ -96,7 +96,6 @@ def get_receive_data():
                 print("PostgreSQL connection is closed")
 
         return jsonify(json_data)
-        # return 'lol'
 
 # add new employee
 @app.route('/add_employee', methods=['POST'])
