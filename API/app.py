@@ -4,10 +4,14 @@ import os
 import psycopg2
 import cv2
 import numpy as np
-
+import json
+import sys
 
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 
+# Load the horaires to know ho can leave at what time
+with open('assets/json/horaires.json', 'r') as f:
+    HORAIRES = json.load(f)
 # * ---------- Create App --------- *
 app = Flask(__name__)
 CORS(app, support_credentials=True)
@@ -20,25 +24,6 @@ CORS(app, support_credentials=True)
 
 
 # * --------------------  ROUTES ------------------- *
-# add new employee
-@app.route('/add_employee', methods=['POST'])
-def add_employee():
-    imagefile = request.files.get('image', '')
-    name = request.files.get('name', '')
-
-    file_path = os.path.join('assets/img/users/', name)
-    imagefile.save(file_path)
-
-    return 'new employee succesfully added'
-
-# delete employee
-@app.route('/delete_employee', methods=['POST'])
-def delete_employee():
-    name = request.files.get('name', '')+'.jpg'
-    file_path = os.path.join('assets/img/users/', name)
-    os.remove(file_path)
-
-    return 'employee succesfully removed'
 
 # Get data from the face recognition
 @app.route('/receive_data', methods=['POST'])
@@ -62,31 +47,46 @@ def get_receive_data():
             result = cursor.fetchall()
             connection.commit()
 
-
             if result:
-               print('user IN')
-               image_path = f"{FILE_PATH}/assets/img/{json_data['date']}/{json_data['name']}/departure.jpg"
+               print('user already in db')
+               image_path = f"{FILE_PATH}/assets/img/history/{json_data['date']}/{json_data['name']}/departure.jpg"
                 # Save image
-               os.makedirs(f"{FILE_PATH}/assets/img/{json_data['date']}/{json_data['name']}", exist_ok=True)
+               os.makedirs(f"{FILE_PATH}/assets/img/history/{json_data['date']}/{json_data['name']}", exist_ok=True)
                cv2.imwrite(image_path, np.array(json_data['picture_array']))
 
                json_data['picture_path'] = image_path
 
-               update_user_querry = f"UPDATE users SET departure_time = '{json_data['hour']}', departure_picture = '{json_data['picture_path']}' WHERE name = '{json_data['name']}' AND date = '{json_data['date']}'"
+               # Calculate if the employee left early or not
+               right_departure_time = HORAIRES['default']['departure_time']
+               for key, value in HORAIRES.items():
+                   if key == json_data['name']:
+                       right_departure_time = value['departure_time']
+               left_early = right_departure_time > json_data['hour']
+
+
+               update_user_querry = f"UPDATE users SET departure_time = '{json_data['hour']}',departure_picture = '{json_data['picture_path']}',left_early = {left_early} WHERE name = '{json_data['name']}' AND date = '{json_data['date']}'"
                cursor.execute(update_user_querry)
 
             else:
-                print("user OUT")
+                print("user not in db")
                 # Save image
                 image_path = f"{FILE_PATH}/assets/img/history/{json_data['date']}/{json_data['name']}/arrival.jpg"
                 os.makedirs(f"{FILE_PATH}/assets/img/history/{json_data['date']}/{json_data['name']}", exist_ok=True)
                 cv2.imwrite(image_path, np.array(json_data['picture_array']))
                 json_data['picture_path'] = image_path
-                insert_user_querry = f"INSERT INTO users (name, date, arrival_time, arrival_picture) VALUES ('{json_data['name']}', '{json_data['date']}', '{json_data['hour']}', '{json_data['picture_path']}')"
+
+                # Calculate if the employee was late or not
+                right_arrival_time = HORAIRES['default']['arrival_time']
+                for key, value in HORAIRES.items():
+                    if key == json_data['name']:
+                        right_arrival_time = value['arrival_time']
+                was_late = right_arrival_time < json_data['hour']
+
+                insert_user_querry = f"INSERT INTO users (name, date, arrival_time, arrival_picture,is_late) VALUES ('{json_data['name']}', '{json_data['date']}', '{json_data['hour']}', '{json_data['picture_path']}',{was_late})"
                 cursor.execute(insert_user_querry)
 
         except (Exception, psycopg2.DatabaseError) as error:
-            print("ERROR DB: ", error)
+            print("ERROR DB: ", sys.exc_info())
         finally:
             connection.commit()
             # closing database connection.

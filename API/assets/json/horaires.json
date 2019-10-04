@@ -1,0 +1,7 @@
+{
+"default":{
+	"arrival_time":"09:00:00",
+	"departure_time":"17:00:00"},
+"giuliano":{"arrival_time":"12:00:00",
+	"departure_time":"12:00:01"}
+	}
