@@ -17,9 +17,7 @@ function App() {
 
 	const [searchBarAnswer, setSearchBarAnswer] = useState([]);
 
-	// const bertrand = (lol) => {
-	// 	setBertandState(lol)
-	// }
+
 
 	return(
 		<Fragment>

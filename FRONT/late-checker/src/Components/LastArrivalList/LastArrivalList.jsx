@@ -1,7 +1,8 @@
-import React, {Fragment, useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components'
+import LastArrivalItems from '../LastArrivalList/LastArrivalItems'
 
-const LastArrivalList = () => {
+const LastArrivalList = props => {
         const LastArrivalSection = styled.section`
             display: flex;
             flex-direction: column;
@@ -19,12 +20,46 @@ const LastArrivalList = () => {
                 text-align: center;
             }
         `
+    const AnswerDiv = styled.div`
+        min-width: 90%;
+`
+
+    const [employeeList, setEmployeeList] = useState([]);
+
+
+    const searchForLastEntrys = () => {
+            fetch(`http://127.0.0.1:5000/get_5_last_entires`)
+            .then(response => response.json())
+            .then(response => {
+                console.log(response)
+                if(response) {
+                    setEmployeeList(response)
+                    // props.LastEntrystAnswer(response)
+                }
+            })
+        
+
+    }
+    const LastEntrystAnswer = props => {
+        let obj = props.answer
+        let answerList = Object.keys(obj).map(key => {
+            return <LastArrivalItems result={ obj[key] } />
+        })
+        return answerList
+    }
+    searchForLastEntrys()
 
     return (
         <LastArrivalSection>
             <h2>Last arrivals</h2>
 				<ul>
-                    <li>Maxim Berge</li>
+                    <AnswerDiv>
+                        {/* Show user's data if user found */}
+                        { ( employeeList && !employeeList['error'] ) ? <LastEntrystAnswer answer={ employeeList } /> : null }
+
+                        {/* Show an error if user is not found */}
+                        { employeeList['error'] ? <p>User not found...</p> : null }
+                    </AnswerDiv>
 				</ul>
 			</LastArrivalSection>
     );
