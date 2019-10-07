@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components'
 import LastArrivalItems from '../LastArrivalList/LastArrivalItems'
 
-const LastArrivalList = props => {
+const LastArrivalList = () => {
         const LastArrivalSection = styled.section`
             display: flex;
             flex-direction: column;
@@ -34,7 +34,6 @@ const LastArrivalList = props => {
                 console.log(response)
                 if(response) {
                     setEmployeeList(response)
-                    // props.LastEntrystAnswer(response)
                 }
             })
         
