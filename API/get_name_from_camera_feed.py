@@ -1,15 +1,7 @@
-import cv2
-import math
-from sklearn import neighbors
-import os
-import os.path
-import pickle
-from PIL import Image, ImageDraw
 import face_recognition
 import numpy as np
-import sys
 import cv2, queue, threading, time
-
+import requests
 
 # bufferless VideoCapture
 class VideoCapture:
@@ -79,8 +71,16 @@ giuliano_face_encoding = face_recognition.face_encodings(giuliano_face)[0]
 mathieu_face = face_recognition.load_image_file("assets/img/users/mathieu.jpg")
 mathieu_face_encoding = face_recognition.face_encodings(mathieu_face)[0]
 
+# * ---------- CASSANDRA ---------- *
+# Select an image to teach to the machine how to recognize
+cassandra_face = face_recognition.load_image_file("assets/img/users/cassandra.jpg")
+cassandra_face_encoding = face_recognition.face_encodings(cassandra_face)[0]
 
 
+# * ---------- LUDO ---------- *
+# Select an image to teach to the machine how to recognize
+ludo_face = face_recognition.load_image_file("assets/img/users/ludo.jpg")
+ludo_face_encoding = face_recognition.face_encodings(ludo_face)[0]
 
 
 # Create arrays of known face encodings and their names
@@ -90,7 +90,9 @@ known_face_encodings = [
     xavier_face_encoding,
     jeremy_face_encoding,
     giuliano_face_encoding,
-    mathieu_face_encoding
+    mathieu_face_encoding,
+    cassandra_face_encoding,
+    ludo_face_encoding
 ]
 known_face_names = [
     "Maxim Berge",
@@ -98,7 +100,9 @@ known_face_names = [
     "Xavier",
     "Jeremy",
     "Giuliano",
-    "Mathieu"
+    "Mathieu",
+    "Cassandra",
+    "Ludo"
 ]
 
 
@@ -128,6 +132,10 @@ while True:
         
         # Initialize an array for the name of the detected users
         face_names = []
+
+
+        # * ---------- Initialyse JSON to EXPORT --------- *
+        json_to_export = {}
         
         for face_encoding in face_encodings:
             # See if the face is a match for the known face(s)
@@ -144,7 +152,18 @@ while True:
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
                 name = known_face_names[best_match_index]
-                print(name)
+
+                # * ---------- SAVE data to send to the API -------- *
+                json_to_export['name'] = name
+                json_to_export['hour'] = f'{time.localtime().tm_hour}:{time.localtime().tm_min}'
+                json_to_export['date'] = f'{time.localtime().tm_year}-{time.localtime().tm_mon}-{time.localtime().tm_mday}'
+                json_to_export['picture_array'] = frame.tolist()
+
+                # * ---------- SEND data to API --------- *
+
+
+                r = requests.post(url='http://127.0.0.1:5000/receive_data', json=json_to_export)
+                print("Status: ", r.status_code)
 
             face_names.append(name)
         
