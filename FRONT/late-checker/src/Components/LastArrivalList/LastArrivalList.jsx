@@ -3,13 +3,12 @@ import styled from 'styled-components'
 import LastArrivalItems from '../LastArrivalList/LastArrivalItems'
 
 const LastArrivalList = () => {
-        const LastArrivalSection = styled.section`
+    const LastArrivalSection = styled.section`
             display: flex;
             flex-direction: column;
-            margin: 40px 0 40px 0;
+            margin: 40px 10px;
             background-color: #ffffff;
             padding: 20px;
-            /* max-width: 550px; */
             width: 45vw;
             h2 {
                 margin-top : 0;
@@ -21,17 +20,16 @@ const LastArrivalList = () => {
             }
         `
     const AnswerDiv = styled.div`
-        min-width: 90%;
+        min-width: 50%;
 `
 
     const [employeeList, setEmployeeList] = useState([]);
 
 
-    const searchForLastEntrys = () => {
+    const searchForLastEntries = () => {
             fetch(`http://127.0.0.1:5000/get_5_last_entires`)
             .then(response => response.json())
             .then(response => {
-                console.log(response)
                 if(response) {
                     setEmployeeList(response)
                 }
@@ -39,22 +37,22 @@ const LastArrivalList = () => {
         
 
     }
-    const LastEntrystAnswer = props => {
+    const LastEntriestAnswer = props => {
         let obj = props.answer
         let answerList = Object.keys(obj).map(key => {
             return <LastArrivalItems result={ obj[key] } />
         })
         return answerList
     }
-    searchForLastEntrys()
+    searchForLastEntries()
 
     return (
-        <LastArrivalSection>
+        <LastArrivalSection className='some-space'>
             <h2>Last arrivals</h2>
 				<ul>
                     <AnswerDiv>
                         {/* Show user's data if user found */}
-                        { ( employeeList && !employeeList['error'] ) ? <LastEntrystAnswer answer={ employeeList } /> : null }
+                        { ( employeeList && !employeeList['error'] ) ? <LastEntriestAnswer answer={ employeeList } /> : null }
 
                         {/* Show an error if user is not found */}
                         { employeeList['error'] ? <p>User not found...</p> : null }

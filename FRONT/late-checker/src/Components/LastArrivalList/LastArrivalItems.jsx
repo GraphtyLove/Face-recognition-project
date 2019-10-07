@@ -9,7 +9,7 @@ const LastArrivalItems = props => {
         padding: 15px;
         border-radius: 6px;
         margin: 15px 0;
-        min-width: 100%;
+        min-width: 80%;
 `
     const ListItem = styled.li`
         list-style: none;

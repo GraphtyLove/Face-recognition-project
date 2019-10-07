@@ -161,7 +161,7 @@ def get_5_last_entires():
                 for ko, vo in enumerate(result[k]):
                     answer_to_send[k][ko] = str(vo)
         else:
-            answer_to_send = {'error': True}
+            answer_to_send = {'error': 'error detect'}
 
     except (Exception, psycopg2.DatabaseError) as error:
         print("ERROR DB: ", error)

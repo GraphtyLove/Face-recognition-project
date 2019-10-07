@@ -15,7 +15,7 @@ const SearchBar = props => {
     const SearchSection = styled.section`
         display: flex;
         flex-direction: column;
-        margin: 40px 0 40px 0;
+        margin: 40px 10px;
         background-color: #ffffff;
         padding: 20px;
         width: 45vw;
@@ -48,7 +48,6 @@ const SearchBar = props => {
                 console.log(response)
                 if(response){
                    setEmployeeList(response)
-                    props.searchBarAnswer(response)
                 } else {
                   setErrorMessage(response.Error)
                   // setLoading(false)

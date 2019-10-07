@@ -1,11 +1,11 @@
-import React, {Fragment, useState} from 'react';
+import React from 'react';
 import styled from 'styled-components'
 
 const VideoFeed = () => {
         const VideoFeedSection = styled.section`
     display: flex;
     flex-direction: column;
-    margin: 40px 0 40px 0;
+    margin: 40px 10px;
     background-color: #ffffff;
     padding: 20px;
     /* max-width: 550px; */
@@ -20,9 +20,10 @@ const VideoFeed = () => {
     }
 `
     return (
-            <VideoFeedSection>
+            <VideoFeedSection className='some-space'>
 				<h2>Video Feed - classroom 1</h2>
                 <iframe allowFullScreen
+                        title = 'camera feed'
                         webkitallowfullscreen
                         mozallowfullscreen
                         src="https://video.nest.com/embedded/live/GqJifk6U25?autoplay=0"
