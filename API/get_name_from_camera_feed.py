@@ -29,8 +29,8 @@ class VideoCapture:
         return self.q.get()
 
 # Select the webcam of the computer
-# video_capture = VideoCapture('https://stream-eu1-charlie.dropcam.com:443/nexus_aac/b85a6ec812c045cd921f4164e8e7ecc0/playlist.m3u8?public=GqJifk6U25')
-video_capture = VideoCapture(0)
+video_capture = VideoCapture('https://stream-eu1-charlie.dropcam.com:443/nexus_aac/b85a6ec812c045cd921f4164e8e7ecc0/playlist.m3u8?public=GqJifk6U25')
+# video_capture = VideoCapture(0)
 
 # video_capture.set(5,1)
 

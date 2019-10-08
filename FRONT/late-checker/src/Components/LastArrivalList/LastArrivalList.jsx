@@ -24,18 +24,24 @@ const LastArrivalList = () => {
 `
 
     const [employeeList, setEmployeeList] = useState([]);
-
+    // WAIT x MS:
+    const wait = ms => {
+       const start = new Date().getTime();
+       let end = start;
+       while(end < start + ms) {
+         end = new Date().getTime();
+      }
+    }
 
     const searchForLastEntries = () => {
-            fetch(`http://127.0.0.1:5000/get_5_last_entires`)
-            .then(response => response.json())
-            .then(response => {
-                if(response) {
-                    setEmployeeList(response)
-                }
-            })
-        
-
+        wait(5000)
+        fetch(`http://127.0.0.1:5000/get_5_last_entires`)
+        .then(response => response.json())
+        .then(response => {
+            if(response) {
+                setEmployeeList(response)
+            }
+        })
     }
     const LastEntriestAnswer = props => {
         let obj = props.answer

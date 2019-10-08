@@ -1,0 +1,34 @@
+Metadata-Version: 2.1
+Name: face-recognition-models
+Version: 0.3.0
+Summary: Models used by the face_recognition package.
+Home-page: https://github.com/ageitgey/face_recognition_models
+Author: Adam Geitgey
+Author-email: ageitgey@gmail.com
+License: MIT license
+Keywords: face_recognition
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+
+Face Recognition Models
+=======================
+
+This package contains only the models used by `face_recognition <https://github.com/ageitgey/face_recognition>`__.
+
+See  `face_recognition <https://github.com/ageitgey/face_recognition>`__ for more information.
+
+These models were created by `Davis King <https://github.com/davisking/dlib-models>`__ and are licensed in the public domain
+or under CC0 1.0 Universal. See LICENSE.
+
+

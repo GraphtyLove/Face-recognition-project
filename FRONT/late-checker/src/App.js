@@ -3,6 +3,7 @@ import './App.css'
 import VideoFeed from './Components/VideoFeed/VideoFeed'
 import SearchBar from './Components/SearchBar/SearchBar'
 import LastArrivalList from './Components/LastArrivalList/LastArrivalList'
+import AdminBlock from './Components/AdminBlock/AdminBlock'
 import styled from 'styled-components'
 
 function App() {
@@ -22,18 +23,15 @@ function App() {
 		justify-content: center;
 `
 
-	// * ---------- STATES ---------- *
-	// const [searchBarAnswer, setSearchBarAnswer] = useState([]);
-
-
 
 	return(
 		<Fragment>
 			<TitleOne>Late Checker</TitleOne>
 			<MainContainer>
 				<VideoFeed />
-				<SearchBar classname='some-space' />
-				<LastArrivalList classname='some-space'  />
+				<SearchBar />
+				{/*<LastArrivalList />*/}
+				<AdminBlock />
 			</MainContainer>
 		</Fragment>
 	)}

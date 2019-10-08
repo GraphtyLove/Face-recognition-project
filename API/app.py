@@ -129,7 +129,7 @@ def get_employee(name):
             connection.close()
 
     # Return the user's data to the front
-    return json.dumps(answer_to_send)
+    return jsonify(answer_to_send)
 
 
 # * --------- Get the 5 last users seen by the camera --------- *
@@ -172,24 +172,26 @@ def get_5_last_entires():
             connection.close()
 
     # Return the user's data to the front
-    return json.dumps(answer_to_send)
+    return jsonify(answer_to_send)
 
 
 # * ---------- Add new employee ---------- *
 @app.route('/add_employee', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def add_employee():
-    try:
-        # Get the picture from the request
-        image_file = request.files.get('image', '')
-        json_data = request.get_json()
+    # try:
+    # Get the picture from the request
+    image_file = request.files['image']
+    # json_data = request.get_json()
+    print(request.form['nameOfEmployee'])
 
-        # Store it in the folder of the know faces:
-        file_path = os.path.join('assets/img/users/', json_data['name'])
-        image_file.save(file_path)
-        answer = 'new employee succesfully added'
-    except:
-        answer = 'Error while adding new employee. Please try later'
-    return answer
+    # Store it in the folder of the know faces:
+    file_path = os.path.join(f"assets/img/users/{request.form['nameOfEmployee']}.jpg")
+    image_file.save(file_path)
+    answer = 'new employee succesfully added'
+    # except:
+        # answer = 'Error while adding new employee. Please try later...'
+    return jsonify(answer)
 
 
 # * ---------- Delete employee ---------- *
@@ -204,7 +206,7 @@ def delete_employee():
     except:
         answer = 'Error while deleting new employee. Please try later'
 
-    return answer
+    return jsonify(answer)
 
 
 # * ---------- This route is bugged ---------- *
@@ -233,13 +235,13 @@ def attendance():
     result = cursor.fetchall()
     connection.commit()
     print(result)
-    return {'result': i for i in result}
+    return jsonify({'result': i for i in result})
 
 
 
 # * -------------------- Run Server -------------------- *
 if __name__ == '__main__':
-    # DEBUG MODE:
+    # * --- DEBUG MODE: --- *
     app.run(host='127.0.0.1', port=5000, debug=True)
-    # DOCKER PRODUCTION MODE:
+    #  * --- DOCKER PRODUCTION MODE: --- *
     # app.run(host='0.0.0.0', port=os.environ['PORT']) -> DOCKER
