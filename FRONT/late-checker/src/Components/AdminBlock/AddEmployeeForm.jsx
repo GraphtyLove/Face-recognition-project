@@ -26,21 +26,18 @@ const AddEmployeeForm = () => {
       font-weight: bold;
 `
 
+    
 
     const addEmployeeToDb = e => {
         e.preventDefault()
         // Send it to backend -> add_employee as a POST request
         let name = document.getElementById("nameOfEmployee").value
-        let file = document.getElementById('employeePictureToSend')
+        let picture = document.getElementById('employeePictureToSend')
 
         let formData  = new FormData();
 
         formData.append("nameOfEmployee", name)
-        formData.append("image", file[0])
-
-        for(var pair of formData.entries()) {
-            console.log(pair[0]+ ', '+ pair[1]);
-        }
+        formData.append("image", picture.files[0])
 
         fetch('http://127.0.0.1:5000/add_employee',{
             method: 'POST',

@@ -180,17 +180,17 @@ def get_5_last_entires():
 @cross_origin(supports_credentials=True)
 def add_employee():
     # try:
-        # Get the picture from the request
+    # Get the picture from the request
     image_file = request.files['image']
     # json_data = request.get_json()
-    print(request.form)
+    print(request.form['nameOfEmployee'])
 
     # Store it in the folder of the know faces:
-    file_path = os.path.join('assets/img/users/', json_data['name'])
+    file_path = os.path.join(f"assets/img/users/{request.form['nameOfEmployee']}.jpg")
     image_file.save(file_path)
     answer = 'new employee succesfully added'
     # except:
-    #     answer = 'Error while adding new employee. Please try later...'
+        # answer = 'Error while adding new employee. Please try later...'
     return jsonify(answer)
 
 
