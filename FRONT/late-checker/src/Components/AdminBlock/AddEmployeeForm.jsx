@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components'
+
 
 const AddEmployeeForm = () => {
 
@@ -10,23 +11,41 @@ const AddEmployeeForm = () => {
       max-width: 350px;
 `
     const AddEmployeeInput = styled.input`
-      margin-bottom: 20px;
+         margin-bottom: 20px;
 `
     const AddEmployeeInputText = styled.input`
-      max-width: 200px;
-      margin-bottom: 20px;
+        max-width: 200px;
+        margin-bottom: 20px;
+        outline: 0;
+        border-width: 0 0 1px;
+        border-color: #013087;
+        padding: 5px;
 `
     const AddEmployeeButton = styled.button`
       max-width: 100px;
-      padding: 10px 0;
+      padding: 10px 20px;
       background: forestgreen;
       border: none;
       border-radius: 3px;
       color: white;
       font-weight: bold;
+      cursor: pointer;
+      align-self: center;
+`
+    const SuccessAddUser = styled.p`
+        padding: 10px;
+        color: #25AD47;
+        font-weight: bold;
+    `
+    const ConstErrorAddUser = styled.p`
+    padding: 10px;
+    color: #E62727;
+    font-weight: bold;
 `
 
-    
+     // * ----------- STATES ---------- *
+     const [isUserWellAdded, setIsUserWellAdded] = useState(false);
+     const [errorWhileAddingUser, seterrorWhileAddingUser] = useState(false);
 
     const addEmployeeToDb = e => {
         e.preventDefault()
@@ -46,8 +65,9 @@ const AddEmployeeForm = () => {
             .then(reposonse => reposonse.json())
             .then(response => {
                 console.log(response)
+                setIsUserWellAdded(true)
             })
-            .catch(error => console.log("error", error))
+            .catch(error => seterrorWhileAddingUser(true))
     }
 
     return (
@@ -57,6 +77,8 @@ const AddEmployeeForm = () => {
                 <AddEmployeeInputText id="nameOfEmployee" name="name" placeholder='John Doe' type="text" />
                 <AddEmployeeInput type="file" alt="employee" id='employeePictureToSend' name='employeePictureToSend' />
                 <AddEmployeeButton onClick={ addEmployeeToDb }>Add</AddEmployeeButton>
+                { isUserWellAdded && <SuccessAddUser>User well added to the Database!</SuccessAddUser> }
+                { errorWhileAddingUser && <ConstErrorAddUser>User didn't added to the Database. Please try later...</ConstErrorAddUser> }
             </AddEmployeeForm>
         </section>
     );
