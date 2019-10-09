@@ -1,7 +1,7 @@
 import face_recognition
 import numpy as np
 import cv2, queue, threading, time
-import requests
+import requests, os, re
 
 # bufferless VideoCapture
 class VideoCapture:
@@ -29,81 +29,25 @@ class VideoCapture:
         return self.q.get()
 
 # Select the webcam of the computer
-video_capture = VideoCapture('https://stream-eu1-charlie.dropcam.com:443/nexus_aac/b85a6ec812c045cd921f4164e8e7ecc0/playlist.m3u8?public=GqJifk6U25')
-# video_capture = VideoCapture(0)
+# video_capture = VideoCapture('https://stream-eu1-charlie.dropcam.com:443/nexus_aac/b85a6ec812c045cd921f4164e8e7ecc0/playlist.m3u8?public=GqJifk6U25')
+video_capture = VideoCapture(0)
 
 # video_capture.set(5,1)
 
 # * -------------------- USERS -------------------- *
+known_face_encodings = []
+known_face_names = []
+known_faces_filenames = []
 
-# * ---------- MAXIM ---------- *
-# Select an image to teach to the machine how to recognize
-maxim_face = face_recognition.load_image_file("assets/img/users/maxim.jpg")
-maxim_face_encoding = face_recognition.face_encodings(maxim_face)[0]
+for (dirpath, dirnames, filenames) in os.walk('assets/img/users/'):
+    known_faces_filenames.extend(filenames)
+    break
 
+for filename in known_faces_filenames:
+    face = face_recognition.load_image_file('assets/img/users/' + filename)
+    known_face_names.append(re.sub("[0-9]",'', filename[:-4]))
+    known_face_encodings.append(face_recognition.face_encodings(face)[0])
 
-# * ---------- GEOFFREY ---------- *
-# Load a second sample picture and learn how to recognize it.
-Geoffrey_face = face_recognition.load_image_file("assets/img/users/geoffrey.jpg")
-Geoffrey_face_encoding = face_recognition.face_encodings(maxim_face)[0]
-
-
-# * ---------- XAVIER ---------- *
-# Select an image to teach to the machine how to recognize
-xavier_face = face_recognition.load_image_file("assets/img/users/xavier.jpg")
-xavier_face_encoding = face_recognition.face_encodings(xavier_face)[0]
-
-
-# * ---------- JEREMY ---------- *
-# Select an image to teach to the machine how to recognize
-jeremy_face = face_recognition.load_image_file("assets/img/users/jeremy.jpg")
-jeremy_face_encoding = face_recognition.face_encodings(jeremy_face)[0]
-
-
-# * ---------- giuliano ---------- *
-# Select an image to teach to the machine how to recognize
-giuliano_face = face_recognition.load_image_file("assets/img/users/giuliano.jpg")
-giuliano_face_encoding = face_recognition.face_encodings(giuliano_face)[0]
-
-
-# * ---------- MATHIEU ---------- *
-# Select an image to teach to the machine how to recognize
-mathieu_face = face_recognition.load_image_file("assets/img/users/mathieu.jpg")
-mathieu_face_encoding = face_recognition.face_encodings(mathieu_face)[0]
-
-# * ---------- CASSANDRA ---------- *
-# Select an image to teach to the machine how to recognize
-cassandra_face = face_recognition.load_image_file("assets/img/users/cassandra.jpg")
-cassandra_face_encoding = face_recognition.face_encodings(cassandra_face)[0]
-
-
-# * ---------- LUDO ---------- *
-# Select an image to teach to the machine how to recognize
-ludo_face = face_recognition.load_image_file("assets/img/users/ludo.jpg")
-ludo_face_encoding = face_recognition.face_encodings(ludo_face)[0]
-
-
-# Create arrays of known face encodings and their names
-known_face_encodings = [
-    maxim_face_encoding,
-    Geoffrey_face_encoding,
-    xavier_face_encoding,
-    jeremy_face_encoding,
-    giuliano_face_encoding,
-    mathieu_face_encoding,
-    cassandra_face_encoding,
-    ludo_face_encoding
-]
-known_face_names = [
-    "Maxim Berge",
-    "Geoffrey",
-    "Xavier",
-    "Jeremy",
-    "Giuliano",
-    "Mathieu",
-    "Cassandra",
-    "Ludo"
-]
 
 
 face_locations = []
