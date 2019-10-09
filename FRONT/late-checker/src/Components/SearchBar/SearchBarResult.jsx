@@ -5,7 +5,6 @@ const SearchBarResult = props => {
     // * ---------- STYLES ---------- *
     const OneResult = styled.div`
         padding: 15px;
-        border-radius: 6px;
         margin: 15px 0;
         min-width: 100%;
         -moz-box-shadow:    3px 3px 8px 3px #ccc;
