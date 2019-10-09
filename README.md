@@ -38,10 +38,10 @@ The front-end will display all the data and allow you to seek for individual dat
 
 ## Which technologies?
 
-**Front-end:** *ReactJs* [logo React](assets/react-logo.png)
-**Back-end API:** *Python Flask* [logo python](assets/python-logo.png)
-**AI model:** *Face_recognition*
-**Installation and environment setup:** *Shell* [logo shell](assets/shell-logo.png)
+* **Front-end:** *ReactJs* ![logo React](assets/react-logo.png)
+* **Back-end API:** *Python Flask* ![logo python](assets/python-logo.png)
+* **AI model:** *Face_recognition*
+* **Installation and environment setup:** *Shell* ![logo shell](assets/shell-logo.png)
 
 
 ## Team:
