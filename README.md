@@ -6,24 +6,24 @@
 It will detect evey face that came in the range of the camera and compare it with the all the employees
 in the system. Then it will automatically update the arrival or departure time in the database.
 At the end you get for every day and every employee a *record* with:
-    - Name
-    - Date
-    - Arrival time
-    - Arrival picture
-    - Departure time
-    - Departure picture
-    - Is he late?
-    - Has he left early?
+* Name
+* Date
+* Arrival time
+* Arrival picture
+* Departure time
+* Departure picture
+* Is he late?
+* Has he left early?
 
 
 ## Features
 
-    - You can see the video feed that record people that leave or come in the room.
-    - You can search for an employee to check the time of his time of arrival and departure.
-    - You can check the keep a screenshot of every arrival or departure.
-    - You can add an employee in the system with a single picture.
-    - You can delete an employee of the system.
-    - You can fastly see the 5 last employee detected by the camera.
+* You can see the video feed that record people that leave or come in the room.
+* You can search for an employee to check the time of his time of arrival and departure.
+* You can check the keep a screenshot of every arrival or departure.
+* You can add an employee in the system with a single picture.
+* You can delete an employee of the system.
+* You can fastly see the 5 last employee detected by the camera.
 
 
 ## How does it work?
@@ -38,13 +38,14 @@ The front-end will display all the data and allow you to seek for individual dat
 
 ## Which technologies?
 
-**Front-end:** *ReactJs*
-**Back-end API:** *Python Flask*
+**Front-end:** *ReactJs* [logo React](assets/react-logo.png)
+**Back-end API:** *Python Flask* [logo python](assets/python-logo.png)
 **AI model:** *Face_recognition*
-**Installation and environement setup:** *Shell*
+**Installation and environment setup:** *Shell* [logo shell](assets/shell-logo.png)
 
 
 ## Team:
-    - [Berge Maxim](https://www.linkedin.com/in/maxim-berge-94b486179/)
-    - [Oliveri Giuliano](https://www.linkedin.com/in/giuliano-oliveri-b83b93183/)
-    - [Ronveaux Xavier](https://www.linkedin.com/in/xavier-ronveaux-a472b5178/)
+
+* [Berge Maxim](https://www.linkedin.com/in/maxim-berge-94b486179/)
+* [Oliveri Giuliano](https://www.linkedin.com/in/giuliano-oliveri-b83b93183/)
+* [Ronveaux Xavier](https://www.linkedin.com/in/xavier-ronveaux-a472b5178/)
