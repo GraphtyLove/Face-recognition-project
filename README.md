@@ -6,14 +6,14 @@
 It will detect evey face that came in the range of the camera and compare it with the all the employees
 in the system. Then it will automatically update the arrival or departure time in the database.
 At the end you get for every day and every employee a *record* with:
-    - Name
-    - Date
-    - Arrival time
-    - Arrival picture
-    - Departure time
-    - Departure picture
-    - Is he late?
-    - Has he left early?
+* Name
+* Date
+* Arrival time
+* Arrival picture
+* Departure time
+* Departure picture
+* Is he late?
+* Has he left early?
 
 
 ## Features
