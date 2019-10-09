@@ -4,7 +4,7 @@ import os
 import psycopg2
 import cv2
 import numpy as np
-import json
+import re
 
 
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -179,30 +179,48 @@ def get_5_last_entires():
 @app.route('/add_employee', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def add_employee():
-    # try:
-    # Get the picture from the request
-    image_file = request.files['image']
-    # json_data = request.get_json()
-    print(request.form['nameOfEmployee'])
+    try:
+        # Get the picture from the request
+        image_file = request.files['image']
+        print(request.form['nameOfEmployee'])
 
-    # Store it in the folder of the know faces:
-    file_path = os.path.join(f"assets/img/users/{request.form['nameOfEmployee']}.jpg")
-    image_file.save(file_path)
-    answer = 'new employee succesfully added'
-    # except:
-        # answer = 'Error while adding new employee. Please try later...'
+        # Store it in the folder of the know faces:
+        file_path = os.path.join(f"assets/img/users/{request.form['nameOfEmployee']}.jpg")
+        image_file.save(file_path)
+        answer = 'new employee succesfully added'
+    except:
+        answer = 'Error while adding new employee. Please try later...'
     return jsonify(answer)
 
 
+# * ---------- Get employee list ---------- *
+@app.route('/get_employee_list', methods=['GET'])
+def get_employee_list():
+    employee_list = {}
+
+    # Walk in the user folder to get the user list
+    walk_count = 0
+    for file_name in os.listdir(f"{FILE_PATH}/assets/img/users/"):
+        # Capture the employee's name with the file's name
+        name = re.findall("(.*)\.jpg", file_name)
+        if name:
+            employee_list[walk_count] = name[0]
+        walk_count += 1
+
+    return jsonify(employee_list)
+
+
+
+
 # * ---------- Delete employee ---------- *
-@app.route('/delete_employee', methods=['POST'])
-def delete_employee():
+@app.route('/delete_employee/<string:name>', methods=['GET'])
+def delete_employee(name):
     try:
-        # Remose the picture of the employee from the user's folder:
-        json_data = request.get_json()
-        file_path = os.path.join('assets/img/users/', json_data['name']+'.jpg')
+        # Remove the picture of the employee from the user's folder:
+        print('name: ', name)
+        file_path = os.path.join(f'assets/img/users/{name}.jpg')
         os.remove(file_path)
-        answer = 'employee succesfully removed'
+        answer = 'Employee succesfully removed'
     except:
         answer = 'Error while deleting new employee. Please try later'
 

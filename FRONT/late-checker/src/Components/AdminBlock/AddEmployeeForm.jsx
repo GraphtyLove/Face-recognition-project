@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components'
 
 
-const AddEmployeeForm = () => {
+const AddEmployeeForm = props => {
 
     // * ----------- STYLE ---------- *
     const AddEmployeeForm = styled.div`
@@ -42,10 +42,14 @@ const AddEmployeeForm = () => {
     color: #E62727;
     font-weight: bold;
 `
+    const H3AddEmployee = styled.h3`
+    display: flex;
+    align-items: center;
+`
 
-     // * ----------- STATES ---------- *
-     const [isUserWellAdded, setIsUserWellAdded] = useState(false);
-     const [errorWhileAddingUser, seterrorWhileAddingUser] = useState(false);
+    // * ----------- STATES ---------- *
+    const [isUserWellAdded, setIsUserWellAdded] = useState(false);
+    const [errorWhileAddingUser, seterrorWhileAddingUser] = useState(false);
 
     const addEmployeeToDb = e => {
         e.preventDefault()
@@ -72,7 +76,7 @@ const AddEmployeeForm = () => {
 
     return (
         <section>
-            <h3>Add an employee</h3>
+            <H3AddEmployee>Add an employee</H3AddEmployee>
             <AddEmployeeForm>
                 <AddEmployeeInputText id="nameOfEmployee" name="name" placeholder='John Doe' type="text" />
                 <AddEmployeeInput type="file" alt="employee" id='employeePictureToSend' name='employeePictureToSend' />

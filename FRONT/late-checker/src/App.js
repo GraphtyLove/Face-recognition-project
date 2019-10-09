@@ -30,7 +30,7 @@ function App() {
 			<MainContainer>
 				<VideoFeed />
 				<SearchBar />
-				{/*<LastArrivalList />*/}
+				<LastArrivalList />
 				<AdminBlock />
 			</MainContainer>
 		</Fragment>
