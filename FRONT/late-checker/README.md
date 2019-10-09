@@ -18,6 +18,7 @@ Then you need to **install all the decencies**. For that, just launch in your te
 ```bash
 sudo npm install
 ```
+*Notes: This will run a **development** version and this is **not optimized for the production**.*
 
 When everything is installed, you can simply **run the app** and a tab be opened in your default browser.
 To **run the app**, just type this in your terminal:
@@ -59,4 +60,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 More information: https://facebook.github.io/create-react-app/docs/deployment
 
-### `npm run build` fails to minify
+### `npm run build`
+
+To make a production code (minified and optimized)
