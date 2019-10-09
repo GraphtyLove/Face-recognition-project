@@ -43,7 +43,7 @@ The front-end will display all the data and allow you to seek for individual dat
 * **Front-end:** *ReactJs* ![logo React](assets/react-logo.png)
 * **Back-end API:** *Python Flask* ![logo python](assets/python-logo.png)
 * **AI model:** *Face_recognition*
-* **Installation and environment setup:** *Shell* ![logo shell](assets/shell-logo.png)
+* **Installation and environment setup:** *Bash* ![logo bash](assets/bash-logo.png)
 
 
 ## Team:
