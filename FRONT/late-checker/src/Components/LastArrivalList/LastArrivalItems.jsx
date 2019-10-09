@@ -4,12 +4,15 @@ import styled from 'styled-components'
 const LastArrivalItems = props => {
     // * ---------- STYLES ---------- *
     const OneResult = styled.div`
-        background: #282c34;
-        color: #fff;
+        //background: #282c34;
+        //color: #fff;
         padding: 15px;
-        border-radius: 6px;
-        margin: 15px 0;
+        //border-radius: 6px;
+        margin: 30px 0;
         min-width: 80%;
+        -moz-box-shadow:    3px 3px 8px 3px #ccc;
+        -webkit-box-shadow: 3px 3px 8px 3px #ccc;
+        box-shadow:         3px 3px 8px 3px #ccc;
 `
     const ListItem = styled.li`
         list-style: none;

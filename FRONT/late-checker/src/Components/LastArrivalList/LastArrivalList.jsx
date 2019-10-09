@@ -59,7 +59,7 @@ const LastArrivalList = () => {
     return (
         <LastArrivalSection className='some-space'>
             <h2>Last arrivals</h2>
-            <ReloadImgTag src={ realodImg } alt="reload"/>
+            <ReloadImgTag onClick={ () => setIsListIsLoad(false) } src={ realodImg } alt="reload"/>
                     <AnswerDiv>
                         {/* Show user's data if user found */}
                         { ( employeeList && !employeeList['error'] ) ? <LastEntriestAnswer answer={ employeeList } /> : null }
