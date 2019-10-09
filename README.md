@@ -44,6 +44,12 @@ The front-end will display all the data and allow you to seek for individual dat
 * **Back-end API:** *Python Flask* ![logo python](assets/python-logo.png)
 * **AI model:** [Face_recognition](https://github.com/ageitgey/face_recognition)
 * **Installation and environment setup:** *Bash* ![logo bash](assets/bash-logo.png)
+* **Database**: PostgreSQL ![logo postgresql](assets/postgresql-logo.png)
+
+
+## More details
+* [Back-end details](API/README.md)
+* [Front-end details](FRONT/late-checker/README.md)
 
 
 ## Team:
