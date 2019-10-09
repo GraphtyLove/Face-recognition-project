@@ -15,6 +15,8 @@ At the end you get for every day and every employee a *record* with:
 * Is he late?
 * Has he left early?
 
+## Screenshot
+![screenshot of the web app](assets/screenshot-webapp.png)
 
 ## Features
 
