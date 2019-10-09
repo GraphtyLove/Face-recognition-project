@@ -19,7 +19,7 @@ $ deactivate
 
 You can install all the dependencies with 
 ```bash
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 Be carefull to have `CMake` installed before trying to install `face_recognition`. You can install it with 
 ```bash
