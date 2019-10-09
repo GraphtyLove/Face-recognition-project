@@ -1,10 +1,10 @@
 # Face Recognition API
 
-## Python environement
+## Python environment
 
 **Python version:** `Python 3.6.8`
 
-For this project, we used `virtualenv` as enviroment.
+For this project, we used `virtualenv` as environment.
 You can find it in `API/env`.
 You can **activate** it with: 
 ```bash
@@ -15,7 +15,7 @@ and **disable** it with:
 $ deactivate
 ```
 
-## Python depencies
+## Python decencies
 
 You can install all the dependencies with 
 ```bash
@@ -25,6 +25,7 @@ Be carefull to have `CMake` installed before trying to install `face_recognition
 ```bash
 $ pip3 install CMake
 ```
+
 
 ## How to use it
 
