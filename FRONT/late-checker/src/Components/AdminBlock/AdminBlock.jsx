@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components'
 import AddEmployeeForm from './AddEmployeeForm'
-
+import EmployeeToDeleteList from './EmployeeToDeleteList'
 
 
 const AdminBlock = () => {
-
     // * ---------- STYLE ---------- *
     const AdminBlockSection = styled.section`
         display: flex;
@@ -13,7 +12,6 @@ const AdminBlock = () => {
         margin: 40px 10px;
         background-color: #ffffff;
         padding: 20px;
-        /* max-width: 550px; */
         width: 45vw;
         h2 {
             margin-top : 0;
@@ -24,15 +22,24 @@ const AdminBlock = () => {
             text-align: center;
         }
 `
+        const ComponentsContainer = styled.div`
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+`
+
+    // * ---------- STATES --------- *
 
     return (
         <AdminBlockSection>
             <h2>Admin Section</h2>
-
-            {/*Add employee form*/}
-            <AddEmployeeForm />
-            {/*List of employee + delete button*/}
-
+            <ComponentsContainer>
+                {/*Add employee form*/}
+                <AddEmployeeForm />
+                {/*List of employee + delete button*/}
+                <EmployeeToDeleteList />
+            </ComponentsContainer>
         </AdminBlockSection>
     );
 };
