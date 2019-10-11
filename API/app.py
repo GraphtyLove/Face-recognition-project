@@ -1,3 +1,4 @@
+# * ---------- IMPORTS --------- *
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import os
@@ -7,6 +8,7 @@ import numpy as np
 import re
 
 
+
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 
 # * ---------- Create App --------- *
@@ -14,9 +16,20 @@ app = Flask(__name__)
 CORS(app, support_credentials=True)
 
 
+
 # * ---------- DATABASE CONFIG --------- *
-# DATABASE_URL = os.environ['DATABASE_URL']
-# DATABASE_URL = "postgres://tuuiojqb:0ocbMkkVWOKIrfMenjjakNLT5JNQpWu8@manny.db.elephantsql.com:5432/tuuiojqb"
+DATABASE_USER = os.environ['DATABASE_USER']
+DATABASE_PASSWORD = os.environ['DATABASE_PASSWORD']
+DATABASE_HOST = os.environ['DATABASE_HOST']
+DATABASE_PORT = os.environ['DATABASE_PORT']
+DATABASE_NAME = os.environ['DATABASE_NAME']
+
+def DATABASE_CONNECTION():
+    return psycopg2.connect(user=DATABASE_USER,
+                              password=DATABASE_PASSWORD,
+                              host=DATABASE_HOST,
+                              port=DATABASE_PORT,
+                              database=DATABASE_NAME)
 
 
 
@@ -30,19 +43,14 @@ def get_receive_data():
         # Check if the user is already in the DB
         try:
             # Connect to the DB
-            connection = psycopg2.connect(user="tuuiojqb",
-                                          password="0ocbMkkVWOKIrfMenjjakNLT5JNQpWu8",
-                                          host="manny.db.elephantsql.com",
-                                          port="5432",
-                                          database="tuuiojqb")
-
+            connection = DATABASE_CONNECTION()
             cursor = connection.cursor()
 
             # Query to check if the user as been saw by the camera today
-            is_user_is_there_today =\
+            user_saw_today_sql_query =\
                 f"SELECT * FROM users WHERE date = '{json_data['date']}' AND name = '{json_data['name']}'"
 
-            cursor.execute(is_user_is_there_today)
+            cursor.execute(user_saw_today_sql_query)
             result = cursor.fetchall()
             connection.commit()
 
@@ -94,17 +102,12 @@ def get_employee(name):
     # Check if the user is already in the DB
     try:
         # Connect to DB
-        connection = psycopg2.connect(user="tuuiojqb",
-                                      password="0ocbMkkVWOKIrfMenjjakNLT5JNQpWu8",
-                                      host="manny.db.elephantsql.com",
-                                      port="5432",
-                                      database="tuuiojqb")
-
+        connection = DATABASE_CONNECTION()
         cursor = connection.cursor()
         # Query the DB to get all the data of a user:
-        user_information = f"SELECT * FROM users WHERE name = '{name}'"
+        user_information_sql_query = f"SELECT * FROM users WHERE name = '{name}'"
 
-        cursor.execute(user_information)
+        cursor.execute(user_information_sql_query)
         result = cursor.fetchall()
         connection.commit()
 
@@ -139,17 +142,13 @@ def get_5_last_entires():
     # Check if the user is already in the DB
     try:
         # Connect to DB
-        connection = psycopg2.connect(user="tuuiojqb",
-                                      password="0ocbMkkVWOKIrfMenjjakNLT5JNQpWu8",
-                                      host="manny.db.elephantsql.com",
-                                      port="5432",
-                                      database="tuuiojqb")
+        connection = DATABASE_CONNECTION()
 
         cursor = connection.cursor()
         # Query the DB to get all the data of a user:
-        lasts_entries = f"SELECT * FROM users ORDER BY id DESC LIMIT 5;"
+        lasts_entries_sql_query = f"SELECT * FROM users ORDER BY id DESC LIMIT 5;"
 
-        cursor.execute(lasts_entries)
+        cursor.execute(lasts_entries_sql_query)
         result = cursor.fetchall()
         connection.commit()
 
@@ -210,8 +209,6 @@ def get_employee_list():
     return jsonify(employee_list)
 
 
-
-
 # * ---------- Delete employee ---------- *
 @app.route('/delete_employee/<string:name>', methods=['GET'])
 def delete_employee(name):
@@ -227,37 +224,8 @@ def delete_employee(name):
     return jsonify(answer)
 
 
-# * ---------- This route is bugged ---------- *
-@app.route('/attendance', methods=['POST'])
-def attendance():
-    json_data = request.get_json()
-    sql_query = "SELECT * FROM users WHERE "
-    if json_data['date']:
-        sql_query += f"date = '{json_data['date']}' "
-    if json_data['date'] and json_data['name']:
-        sql_query += 'AND'
-    if json_data['name']:
-        sql_query += f"name = '{json_data['name']}'"
-
-    connection = psycopg2.connect(user="tuuiojqb",
-                                  password="0ocbMkkVWOKIrfMenjjakNLT5JNQpWu8",
-                                  host="manny.db.elephantsql.com",
-                                  port="5432",
-                                  database="tuuiojqb")
-
-    cursor = connection.cursor()
-    # is_user_is_there_today = \
-    #     f"SELECT * FROM users WHERE date = '{json_data['date']}' AND name = '{json_data['name']}'"
-
-    cursor.execute(sql_query)
-    result = cursor.fetchall()
-    connection.commit()
-    print(result)
-    return jsonify({'result': i for i in result})
-
-
-
-# * -------------------- Run Server -------------------- *
+                                 
+# * -------------------- RUN SERVER -------------------- *
 if __name__ == '__main__':
     # * --- DEBUG MODE: --- *
     app.run(host='127.0.0.1', port=5000, debug=True)
