@@ -8,7 +8,7 @@ import numpy as np
 import re
 
 
-
+# Get the relativ path to this file (we will use it later)
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 
 # * ---------- Create App --------- *
