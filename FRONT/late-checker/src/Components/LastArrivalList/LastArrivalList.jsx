@@ -37,7 +37,7 @@ const LastArrivalList = () => {
 
     const searchForLastEntries = () => {
         if (!isListIsLoad){
-            fetch('http://127.0.0.1:5000/get_5_last_entires')
+            fetch('http://127.0.0.1:5000/get_5_last_entries')
             .then(response => response.json())
             .then(response => {
                 if(response) {
