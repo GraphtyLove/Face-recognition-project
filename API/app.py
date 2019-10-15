@@ -136,8 +136,8 @@ def get_employee(name):
 
 
 # * --------- Get the 5 last users seen by the camera --------- *
-@app.route('/get_5_last_entires', methods=['GET'])
-def get_5_last_entires():
+@app.route('/get_5_last_entries', methods=['GET'])
+def get_5_last_entries():
     answer_to_send = {}
     # Check if the user is already in the DB
     try:
