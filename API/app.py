@@ -227,35 +227,6 @@ def delete_employee(name):
     return jsonify(answer)
 
 
-# * ---------- This route is bugged ---------- *
-@app.route('/attendance', methods=['POST'])
-def attendance():
-    json_data = request.get_json()
-    sql_query = "SELECT * FROM users WHERE "
-    if json_data['date']:
-        sql_query += f"date = '{json_data['date']}' "
-    if json_data['date'] and json_data['name']:
-        sql_query += 'AND'
-    if json_data['name']:
-        sql_query += f"name = '{json_data['name']}'"
-
-    connection = psycopg2.connect(user="tuuiojqb",
-                                  password="0ocbMkkVWOKIrfMenjjakNLT5JNQpWu8",
-                                  host="manny.db.elephantsql.com",
-                                  port="5432",
-                                  database="tuuiojqb")
-
-    cursor = connection.cursor()
-    # is_user_is_there_today = \
-    #     f"SELECT * FROM users WHERE date = '{json_data['date']}' AND name = '{json_data['name']}'"
-
-    cursor.execute(sql_query)
-    result = cursor.fetchall()
-    connection.commit()
-    print(result)
-    return jsonify({'result': i for i in result})
-
-
 
 # * -------------------- Run Server -------------------- *
 if __name__ == '__main__':

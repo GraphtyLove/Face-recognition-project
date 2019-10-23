@@ -64,7 +64,6 @@ const EmployeeToDeleteList = props => {
 
     // Component that contain the Employee's name and a button to delete it
     const EmployeeItem = props => {
-
         // Function that send the employee's name to delete
         const deleteEmployee = name => {
             fetch(`http://127.0.0.1:5000/delete_employee/${name}`)

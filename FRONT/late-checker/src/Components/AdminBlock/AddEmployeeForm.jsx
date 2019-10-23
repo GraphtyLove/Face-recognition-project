@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components'
 
 
-const AddEmployeeForm = props => {
+const AddEmployeeForm = () => {
 
     // * ----------- STYLE ---------- *
     const AddEmployeeForm = styled.div`

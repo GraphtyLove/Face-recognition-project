@@ -104,8 +104,6 @@ while True:
                 json_to_export['picture_array'] = frame.tolist()
 
                 # * ---------- SEND data to API --------- *
-
-
                 r = requests.post(url='http://127.0.0.1:5000/receive_data', json=json_to_export)
                 print("Status: ", r.status_code)
 
@@ -113,20 +111,13 @@ while True:
         
     process_this_frame = not process_this_frame
             
-            # Display the results
+    # Display the results
     for (top, right, bottom, left), name in zip(face_locations, face_names):
-        # Scale back up face locations since the frame we detected in was scaled to 1/4 size
-        # top *= 4
-        # right *= 4
-        # bottom *= 4
-        # left *= 4
-
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
-
-        # Draw a label with a name below the face
-        # cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
+        # Define the font of the name
         font = cv2.FONT_HERSHEY_DUPLEX
+        # Display the name
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
     # Display the resulting image

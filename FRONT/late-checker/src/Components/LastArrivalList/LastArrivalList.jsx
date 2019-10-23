@@ -36,21 +36,21 @@ const LastArrivalList = () => {
     const [isListIsLoad, setIsListIsLoad] = useState(false);
 
     const searchForLastEntries = () => {
-        if (!isListIsLoad){
+        if (!isListIsLoad) {
             fetch('http://127.0.0.1:5000/get_5_last_entires')
-            .then(response => response.json())
-            .then(response => {
-                if(response) {
-                    setEmployeeList(response)
-                    setIsListIsLoad(true)
-                }
-            })
+                .then(response => response.json())
+                .then(response => {
+                    if (response) {
+                        setEmployeeList(response)
+                        setIsListIsLoad(true)
+                    }
+                })
         }
     }
     const LastEntriestAnswer = props => {
         let obj = props.answer
         let answerList = Object.keys(obj).map(key => {
-            return <LastArrivalItems result={ obj[key] } />
+            return <LastArrivalItems result={obj[key]} />
         })
         return answerList
     }
@@ -59,14 +59,14 @@ const LastArrivalList = () => {
     return (
         <LastArrivalSection className='some-space'>
             <h2>Last arrivals</h2>
-            <ReloadImgTag onClick={ () => setIsListIsLoad(false) } src={ realodImg } alt="reload"/>
-                    <AnswerDiv>
-                        {/* Show user's data if user found */}
-                        { ( employeeList && !employeeList['error'] ) ? <LastEntriestAnswer answer={ employeeList } /> : null }
-                        {/* Show an error if user is not found */}
-                        { employeeList['error'] ? <p>User not found...</p> : null }
-                    </AnswerDiv>
-			</LastArrivalSection>
+            <ReloadImgTag onClick={() => setIsListIsLoad(false)} src={realodImg} alt="reload" />
+            <AnswerDiv>
+                {/* Show user's data if user found */}
+                {(employeeList && !employeeList['error']) ? <LastEntriestAnswer answer={employeeList} /> : null}
+                {/* Show an error if user is not found */}
+                {employeeList['error'] ? <p>User not found...</p> : null}
+            </AnswerDiv>
+        </LastArrivalSection>
     );
 };
 
