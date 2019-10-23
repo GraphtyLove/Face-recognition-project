@@ -17,7 +17,7 @@ $ deactivate
 
 ## Python decencies
 
-You can install all the dependencies with 
+You can install all the dependencies with:
 ```bash
 $ pip3 install -r requirements.txt
 ```
