@@ -25,7 +25,8 @@ const VideoFeed = () => {
                         title = 'camera feed'
                         webkitallowfullscreen
                         mozallowfullscreen
-                        src="https://video.nest.com/embedded/live/GqJifk6U25?autoplay=0"
+			// !!! TO CHANGE !!!
+                        src="YOUR FEED HERE"
                         frameBorder="0"
                         width="100%"
                         height="576" />
