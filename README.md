@@ -1,6 +1,6 @@
 # Late Checker
 
-## Medium artical
+## Medium article
 https://medium.com/analytics-vidhya/how-to-automate-attendance-record-with-face-recognition-python-and-react-8d61c303784
 
 ## Description
