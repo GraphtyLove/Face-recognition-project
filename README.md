@@ -1,5 +1,8 @@
 # Late Checker
 
+## Medium artical
+https://medium.com/analytics-vidhya/how-to-automate-attendance-record-with-face-recognition-python-and-react-8d61c303784
+
 ## Description
 
 **Late Checker** is a web app with AI that automate attendance record.
