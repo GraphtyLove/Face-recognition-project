@@ -9,6 +9,7 @@ import styled from 'styled-components'
 function App() {
 
 	// * ---------- STYLE ---------- *
+	//first checkin
 	const TitleOne = styled.h1`
 		margin-top : 30px;
 		font-size: 50px;
